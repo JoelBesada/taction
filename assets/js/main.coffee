@@ -5,7 +5,7 @@ connection = null
 $ ->
   $circle = $ ".circle"
 
-  connection = new WebSocket("ws://#{window.location.hostname}:4000")
+  connection = new WebSocket("ws://#{window.location.hostname}:#{SOCKET_PORT}")
   connection.onopen = setupTouchListeners
 
   connection.onmessage = (e) ->

@@ -8,4 +8,4 @@ exports.init = (app) ->
 		console.log "Express server listening on port #{app.get "port"}"
 
   app.get "/", (req, res) ->
-    res.render "index"
+    res.render "index", port: req.app.get "port"
