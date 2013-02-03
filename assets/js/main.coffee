@@ -4,6 +4,7 @@ $body = null
 connection = null
 touchPoints = {}
 
+# Displays a single touch point on the screen
 class TouchPoint
   constructor: (@id) ->
     @$el = @createElement()
@@ -35,6 +36,8 @@ $ ->
   connection = new WebSocket("ws://#{window.location.hostname}:#{SOCKET_PORT}")
   connection.onopen = setupTouchListeners
 
+  # Listen for incoming messages (touch input from other devices)
+  # and render it out on the page
   connection.onmessage = (e) ->
     data = JSON.parse e.data
     for touch in data.touches
@@ -47,25 +50,23 @@ $ ->
 
       touchPoints[touch.id]?.move touch.x, touch.y
 
+# Listen for touch events and send them out through the socket
 setupTouchListeners = ->
   return unless !!('ontouchstart' of window)
 
   $(document).on "touchstart", (e) ->
     e.preventDefault()
-
     sendMessage
       start: true
       touches: formatTouches e.originalEvent.changedTouches
 
   $(document).on "touchmove", (e) ->
     e.preventDefault()
-
     sendThrottledMessage
       touches: formatTouches e.originalEvent.changedTouches
 
   $(document).on "touchend touchcancel touchleave", (e) ->
     e.preventDefault()
-    console.log e.originalEvent
     sendMessage
       end: true
       touches: formatTouches e.originalEvent.changedTouches
@@ -75,6 +76,7 @@ sendMessage = (message) ->
 
 sendThrottledMessage = _.throttle(sendMessage, 10)
 
+# Pick out the info we are interested in from the list of touches
 formatTouches = (touches) -> {
   id: touch.identifier
   x: touch.screenX / document.width

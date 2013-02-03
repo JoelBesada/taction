@@ -28,6 +28,7 @@ setupConnection = (connection) ->
   clients[ID] =
     connection: connection
 
+  # Forward all messages to other clients
   connection.on "message", (message) ->
     for clientID, client of clients
       client.connection.sendUTF(message.utf8Data) unless clientID is ID
@@ -38,6 +39,7 @@ setupConnection = (connection) ->
 originIsAllowed = (origin) ->
   app.get("env") is "development" or origin is app.get "domain"
 
+# UUID
 generateID = ->
   "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace /[xy]/g, (c) ->
           r = Math.random() * 16 | 0
