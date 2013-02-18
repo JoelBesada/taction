@@ -8,4 +8,6 @@ games, presentation tools, etc).
 Once the WebRTC implementations in browsers start to allow arbitrary data to be sent
 through the peer connection (DataChannel API), a server won't be needed to handle
 the in-between communication. This could potentially allow this technique
-to be used on a larger scale and not just on local networks.
+to be used on a larger scale and not just on local networks.  
+
+__[Demo Video](https://vine.co/v/b6mdFxFvizK)__ 
