@@ -1,8 +1,5 @@
 ###
 # WebSocket Server Setup
-#
-# Sockets are used to detect when users leave the web
-# page so that temporary data can be removed
 ###
 WebSocketServer = require("websocket").server
 app = null
